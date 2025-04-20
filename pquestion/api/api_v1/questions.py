@@ -21,7 +21,7 @@ async def get_lasted_questions(
         AsyncSession,
         Depends(db_helper.session_getter)
     ],
-    payload: Annotated[QuestionsRead, Depends()]
+    payload: Annotated[QuestionsReadSchema, Depends()]
 ):
     questions_list = await questions.get_lasted_questions(session, limit=payload.limit)
     return {'data': questions_list}
@@ -32,7 +32,7 @@ async def get_question(
         AsyncSession,
         Depends(db_helper.session_getter)
     ],
-    payload: Annotated[QuestionRead, Depends()]
+    payload: Annotated[QuestionReadSchema, Depends()]
 ):
     question = await questions.get_question(session, payload.id)
     return {'data': question}
@@ -47,7 +47,7 @@ async def add_question(
         datetime,
         Depends(get_moscow_time)
     ],
-    question: QuestionBase
+    question: QuestionCreateSchema
 ):
     new_question = await questions.add_question(session, question, time_create=current_moscow_time)
     return {'ok': True, 'question': new_question}

@@ -25,7 +25,7 @@ async def get_question(
 
 async def add_question(
     session: AsyncSession,
-    question_create: QuestionBase,
+    question_create: QuestionCreateSchema,
     time_create
 ) -> Question:
     question = Question(**question_create.model_dump(), time_create=time_create)
